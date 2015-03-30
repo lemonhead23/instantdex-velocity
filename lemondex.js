@@ -39,7 +39,7 @@ if (Meteor.isClient) {
     
     Meteor.call("allOrderbooks");
     
-    ////Meteor.call("getPeers");
+    //Meteor.call("getPeers");
 	
   //var result = HTTP.get("http://127.0.0.1:7778/%7B%22requestType%22:%22orderbook%22,%22baseid%22:%2211060861818140490423%22,%22relid%22:%2217554243582654188572%22%7D").content;
   function test(){
