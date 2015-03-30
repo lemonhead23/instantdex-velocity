@@ -1,0 +1,201 @@
+<head>
+  <title>lemondex</title>
+</head>
+
+<body>
+	<img src="idexfinal1.png" width="100px" height="100px" style="float:left">
+  <h1>InstantDEX</h1>
+<div style="float:left;">
+<div style="float:left;width:350px;">
+  {{> placeBid}}
+ </div>
+ <div style="float:left;width:350px;">
+  {{> placeAsk}}
+</div>
+
+{{> orderbooks}}
+
+</div>
+
+  
+  
+  {{> orderbooksoverview}}
+  
+</body>
+
+
+
+<!-- placeBid form -->
+<template name="placeBid">
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Buy </h3>
+                </div>
+                <div class="panel-body">
+                    
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    
+                                    
+                                    <label for="price" class="col-sm-2 control-label">Price</label>
+                                   
+                                    <div class="input-group col-sm-10">
+										
+                                        <input type="text" class="form-control"  id="bidPrice" name="bidPrice" required autofocus data-stripe="number" />
+                                        
+                                        <span class="input-group-addon">BTC</span>
+                                    </div>
+                                </div>                            
+                            </div>
+                        </div>
+                          <div class="form-group">
+							<label class="col-sm-2 control-label" for="amount">Amount</label>
+							<div class="col-sm-10 input-group">
+							  <input class="form-control" type="text" id="bidAmount">       
+							  <span class="input-group-addon">NXT</span>
+							</div>
+						  </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <button class="btn btn-success btn-lg btn-block">Buy now</button>
+                            </div>
+                        </div>
+                        <div class="row" style="display:none;">
+                            <div class="col-xs-12">
+                                <p class="payment-errors"></p>
+                            </div>
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</template>
+
+<!-- placeAsk form -->
+<template name="placeAsk">
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Sell </h3>
+                </div>
+                <div class="panel-body">
+                    
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    
+                                    
+                                    <label for="price" class="col-sm-2 control-label">Price</label>
+                                   
+                                    <div class="input-group col-sm-10">
+										
+                                        <input type="text" class="form-control"  id="askPrice" name="askPrice" required autofocus data-stripe="number" />
+                                        
+                                        <span class="input-group-addon">BTC</span>
+                                    </div>
+                                </div>                            
+                            </div>
+                        </div>
+                          <div class="form-group">
+							<label class="col-sm-2 control-label" for="amount">Amount</label>
+							<div class="col-sm-10 input-group">
+							  <input class="form-control" type="text" id="askAmount">       
+							  <span class="input-group-addon">NXT</span>
+							</div>
+						  </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <button class="btn btn-success btn-lg btn-block">Sell now</button>
+                            </div>
+                        </div>
+                        <div class="row" style="display:none;">
+                            <div class="col-xs-12">
+                                <p class="payment-errors"></p>
+                            </div>
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</template>
+
+<template name="orderbooksoverview">
+	<div style="float:right; position:relative;right:150px;">
+	<table border="1">
+	{{#each orderbooks}}
+	<tr>{{> overview}}</tr>
+	{{/each}}
+	</table>
+	</div>
+</template>
+
+<template name="overview">
+	<td>{{base}}/{{rel}}</td>
+	<td>{{numquotes}}</td>
+	<td>{{exchange}}</td>
+</template>
+
+<template name="orderbooks">
+	<table border="1">
+	{{#each orderbooks}}
+	{{> orderbook}}
+	{{/each}}
+	</table>
+</template>
+
+<template name="orderbook">
+	
+	
+	<tr><td>{{orders.pair}}</td>
+	<td>{{orders.obookid}}</td></tr>
+		<tr><td>
+			
+			{{> asktable}}
+		</td>
+		<td>
+			{{> bidtable}}
+		</td></tr>
+	
+</template>
+
+<template name="asktable">
+
+<table id="asktable">Sell Orders
+		{{#each orders.asks}}
+		<tr>{{> ask}}</tr>
+		{{/each}}
+		</table>
+
+</template>
+
+<template name="bidtable">
+
+<table id="bidtable">Buy Orders
+				
+		{{#each orders.bids}}
+		<tr>{{> bid}}</tr>
+		{{/each}}
+		
+</table>
+
+</template>
+
+<template name="ask">
+	<td>{{price}}  &nbsp;&nbsp;</td>
+	<td>{{volume}}</td>
+</template>
+
+<template name="bid">
+	<td>{{price}}  &nbsp;&nbsp;</td>
+	<td>{{volume}}</td>
+</template>

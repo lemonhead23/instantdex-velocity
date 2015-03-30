@@ -1,0 +1,34 @@
+/* CSS declarations go here */
+.panel-title {display: inline;font-weight: bold;}
+.checkbox.pull-right { margin: 0; }
+.pl-ziro { padding-left: 0px;
+			padding-left: 10px;
+ }
+.form-control.error {
+    border-color: red;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,0,0,0.6);
+}
+.form-group {
+    padding-right: 10px;
+}
+.control-label {
+	right: 24px;
+	vertical-align: left;
+    margin: 4px;
+}
+.panel {
+    width: 330px;
+}
+label.error {
+  font-weight: bold;
+  color: red;
+  padding: 2px 8px;
+  margin-top: 2px;
+}
+.payment-errors {
+  font-weight: bold;
+  color: red;
+  padding: 2px 8px;
+  margin-top: 2px;
+}

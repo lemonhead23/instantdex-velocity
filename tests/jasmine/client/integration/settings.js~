@@ -1,0 +1,19 @@
+
+ 
+describe('GetPeers', function () {
+
+
+
+it('should work', function () {
+
+var testReport = {
+name: 'Test name',
+failureMessage: 'Failure message',
+failureStackTrace: 'Stack trace'
+};
+this.consoleReporter.reportOneFailed(testReport);
+Meteor.call("getPeers");
+
+expect(true).toBe(true)
+});
+});
