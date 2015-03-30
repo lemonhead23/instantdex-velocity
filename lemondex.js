@@ -132,7 +132,7 @@ if (Meteor.isServer) {
 	});
 	
 	var port = "7777";
-	var server= "http://127.0.0.1";
+	var server= "http://46.5.0.42";
 	
 	Meteor.methods({
 		update: function(){
