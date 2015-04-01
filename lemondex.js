@@ -10,6 +10,8 @@ if (Meteor.isClient) {
 	Meteor.subscribe('allorderbooks');
 	Meteor.subscribe('whitelist');
 	
+	//test
+	
 	//Meteor.call("placeBid","0.1","100","11060861818140490423","17554243582654188572");
 	
 	var x=0.01;
