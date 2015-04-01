@@ -37,7 +37,9 @@ if (Meteor.isClient) {
 			
 	//Meteor.call("getOrderbook","11060861818140490423","17554243582654188572");
 	
-	Meteor.call("getOrderbook","11060861818140490423","17554243582654188572");
+	//Meteor.call("getOrderbook","11060861818140490423","17554243582654188572");
+	
+	Meteor.call("getOrderbook","17554243582654188572","5527630");
 	
 	//"base": "NXT", "baseid": "5527630", "rel": "BTC", "relid": "17554243582654188572"
     
