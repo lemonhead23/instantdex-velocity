@@ -3,6 +3,29 @@ AllOrderbooks = new Mongo.Collection("allorderbooks");
 Whitelist = new Mongo.Collection("whitelist");
 
 
+////////////////////////////
+//
+// iron:router
+//
+///////////////////////////
+Router.configure({
+      //layoutTemplate: 'masterLayout',
+      //notFoundTemplate: 'notFound',
+      //loadingTemplate: 'loading',
+    });
+
+Router.route('/', function () {
+  this.render('home');
+});
+
+Router.route('/orderbook/:_id', function () {
+  this.render('onlyone', {
+    data: function () {
+      return Orderbooks.findOne({'obookid': this.params._id});
+    }
+  });
+});
+
 if (Meteor.isClient) {
 	
 	
@@ -78,6 +101,13 @@ if (Meteor.isClient) {
     orderbooks: function () {
  
       return AllOrderbooks.find().fetch()[0].orderbooks.orderbooks;
+    }
+  });
+  
+  Template.overview.helpers({
+    obookid: function () {
+ 
+      return AllOrderbook.find({orders:{baseid:this.baseid,relid:this.relid}}).fetch()[0].obookid;
     }
   });
   
@@ -183,12 +213,12 @@ if (Meteor.isServer) {
 			
 			
 			
-				//for(i=0;i<json.orderbooks.length;i++){
+				for(i=0;i<json.orderbooks.length;i++){
 				
-					//if(json.orderbooks[i].numquotes>0){
-					//Meteor.call("getOrderbook",json.orderbooks[i].baseid,json.orderbooks[i].relid);
-					//}
-				//}
+					if(json.orderbooks[i].numquotes>0){
+					Meteor.call("getOrderbook",json.orderbooks[i].baseid,json.orderbooks[i].relid);
+					}
+				}
 			
 			},
 		getOrderbook: function(baseid, relid) {

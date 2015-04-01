@@ -11,3 +11,4 @@ twbs:bootstrap
 j4507:datatables-bootstrap-3
 sanjo:jasmine
 velocity:html-reporter
+iron:router

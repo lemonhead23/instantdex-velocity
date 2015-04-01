@@ -3,7 +3,13 @@
 </head>
 
 <body>
-	<img src="idexfinal1.png" width="100px" height="100px" style="float:left">
+
+  
+</body>
+
+<template name="home">
+
+<img src="idexfinal1.png" width="100px" height="100px" style="float:left">
   <h1>InstantDEX</h1>
 <div style="float:left;">
 <div style="float:left;width:350px;">
@@ -20,8 +26,8 @@
   
   
   {{> orderbooksoverview}}
-  
-</body>
+
+</template>
 
 
 
@@ -140,7 +146,7 @@
 </template>
 
 <template name="overview">
-	<td>{{base}}/{{rel}}</td>
+	<td><a href="/orderbook/{{obookid}}">{{base}}/{{rel}}</a></td>
 	<td>{{numquotes}}</td>
 	<td>{{exchange}}</td>
 </template>
@@ -152,6 +158,40 @@
 	{{/each}}
 	</table>
 </template>
+
+<template name="onlyone">
+
+<img src="idexfinal1.png" width="100px" height="100px" style="float:left">
+  <h1>InstantDEX</h1>
+<div style="float:left;">
+<div style="float:left;width:350px;">
+  {{> placeBid}}
+ </div>
+ <div style="float:left;width:350px;">
+  {{> placeAsk}}
+</div>
+
+{{> oneorderbook}}
+
+</div>
+
+  
+  
+  {{> orderbooksoverview}}
+
+
+</template>
+
+<template name="oneorderbook">
+	<table border="1">
+	
+	{{> orderbook}}
+	
+	</table>
+		
+</template>
+
+
 
 <template name="orderbook">
 	
