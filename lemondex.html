@@ -7,31 +7,80 @@
   
 </body>
 
-<template name="home">
 
-<img src="idexfinal1.png" width="100px" height="100px" style="float:left">
-  <h1>InstantDEX</h1>
+<template name="homeNew">
+
+	Obookid: {{obookid}}
+	Baseid: {{orders.baseid}} Relid: {{orders.relid}}<br><br>
+	Press ctrl+m for database info
+<img src="../idexfinal1.png" width="100px" height="100px" style="float:left">
+
+  <br><br>
 <div style="float:left;">
+	
 <div style="float:left;width:350px;">
   {{> placeBid}}
+ 
  </div>
  <div style="float:left;width:350px;">
   {{> placeAsk}}
+  
+</div>
+<div style="float:left;">
+{{> createOrderbook}}
+
 </div>
 
-{{> orderbooks}}
+</div>
+{{> orderbooksoverview}}
+<div style="padding:100px;">
+{{> orderbook}}
 
 </div>
 
-  
-  
-  {{> orderbooksoverview}}
+{{> info}}
+
+</template>
+
+<template name="info">
+
+{{baseid}}-{{relid}}
+{{basename}}-{{relname}}
+
+</template>
+
+<template name="orderbooksoverview">
+	<div style="float:right; position:relative;right:150px;">
+	<table border="1" >
+	{{#each data}}
+	<tr>{{> overview}}</tr>
+	{{/each}}
+	</table>
+	</div>
+</template>
+
+
+
+<template name="overview">
+	<td><a href="/orderbook/{{obookid}}">{{base}}/{{rel}}</a></td>
+	<td>{{numquotes}}</td>
+	<td>{{exchange}}</td>
+	
+</template>
+
+<template name="createOrderbook">
+	
+	<input id="baseid" type="text" value="baseid"><br>
+	<input id="relid" type="text" value="relid"><br>
+	<button id="createOrderbook">Get Orderbook</button>
 
 </template>
 
 
 
-<!-- placeBid form -->
+
+
+<!-- placeBid -->
 <template name="placeBid">
 <div class="container">
     <div class="row">
@@ -83,7 +132,7 @@
 </div>
 </template>
 
-<!-- placeAsk form -->
+<!-- placeAsk -->
 <template name="placeAsk">
 <div class="container">
     <div class="row">
@@ -135,69 +184,16 @@
 </div>
 </template>
 
-<template name="orderbooksoverview">
-	<div style="float:right; position:relative;right:150px;">
-	<table border="1">
-	{{#each orderbooks}}
-	<tr>{{> overview}}</tr>
-	{{/each}}
-	</table>
-	</div>
-</template>
-
-<template name="overview">
-	<td><a href="/orderbook/{{obookid}}">{{base}}/{{rel}}</a></td>
-	<td>{{numquotes}}</td>
-	<td>{{exchange}}</td>
-</template>
-
-<template name="orderbooks">
-	<table border="1">
-	{{#each orderbooks}}
-	{{> orderbook}}
-	{{/each}}
-	</table>
-</template>
-
-<template name="onlyone">
-
-<img src="idexfinal1.png" width="100px" height="100px" style="float:left">
-  <h1>InstantDEX</h1>
-<div style="float:left;">
-<div style="float:left;width:350px;">
-  {{> placeBid}}
- </div>
- <div style="float:left;width:350px;">
-  {{> placeAsk}}
-</div>
-
-{{> oneorderbook}}
-
-</div>
-
-  
-  
-  {{> orderbooksoverview}}
 
 
-</template>
 
-<template name="oneorderbook">
-	<table border="1">
-	
-	{{> orderbook}}
-	
-	</table>
-		
-</template>
 
 
 
 <template name="orderbook">
 	
-	
-	<tr><td>{{orders.pair}}</td>
-	<td>{{orders.obookid}}</td></tr>
+<table border="1">
+{{basename}}/{{relname}}
 		<tr><td>
 			
 			{{> asktable}}
@@ -205,7 +201,7 @@
 		<td>
 			{{> bidtable}}
 		</td></tr>
-	
+</table>
 </template>
 
 <template name="asktable">
