@@ -1,5 +1,5 @@
 
-# instantdex-velocity
+# InstantDEX testing with Meteor/Velocity
 	InstantDEX Testing with Meteor+Velocity
 
 # Prerequisites

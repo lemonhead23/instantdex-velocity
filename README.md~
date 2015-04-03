@@ -2,6 +2,11 @@
 # instantdex-velocity
 	InstantDEX Testing with Meteor+Velocity
 
+# Prerequisites
+
+	1) NXT must be running (http://nxt.org/)
+	2) BTCD must be running (https://github.com/jl777/btcd)
+
 # 1 Install Meteor
 
 	http://meteor.com/install
