@@ -180,8 +180,9 @@ if (Meteor.isClient) {
   
    Template.orderbooksoverview.helpers({
     data: function () {
- 
-	return AllOrderbooks.find().fetch()[0].orderbooks;
+		console.log("asdasdasdasdasdasddddddddddddddddddddddddddd");
+	console.log(Orderbooks.find({'type':'allorderbooks'}).fetch()[0].allorderbooks.orderbooks);
+	return Orderbooks.find({'type':'allorderbooks'}).fetch()[0].allorderbooks.orderbooks;
 
     }
   });
@@ -246,12 +247,11 @@ if (Meteor.isClient) {
       return getOrderbookFromArray(this.baseid,this.relid).rel;
     },
     baseid: function () {
-		console.log("asdasdasdasdasd"+this.baseid);
-		Session.set(this.baseid);
+
 		return Session.get('baseid');
     },
     relid: function () {
-	  Session.set(this.relid);
+
       return Session.get('relid');
     },
   });
@@ -277,6 +277,32 @@ if (Meteor.isClient) {
     }
   });
   
+    Template.placeAsk.helpers({
+
+    basename: function () {
+ 
+		return Session.get('basename');
+    },
+    relname: function () {
+ 
+      return Session.get('relname');
+    }
+  });
+  
+    Template.placeBid.helpers({
+
+    basename: function () {
+ 
+		return Session.get('basename');
+    },
+    relname: function () {
+ 
+      return Session.get('relname');
+    }
+  });
+  
+  
+  
 
 	
 	Template.bidtable.rendered = function () {
@@ -289,16 +315,17 @@ if (Meteor.isClient) {
 		$("#asktable").dataTable();
 	}
 	
+	Template.orderbooksoverview.rendered = function () {
+
+		$("#overview").dataTable();
+	}
+	
 	Template.createOrderbook.events({
     'click button': function () {
 
 		var baseid = document.getElementById("baseid").value;
 		var relid = document.getElementById("relid").value;
-      Meteor.call("getOrderbook",baseid,relid,function(err,result){
-        //$('#output').append(result);
-        //alert(result);
-        
-		});
+      Meteor.call("getOrderbook",baseid,relid);
 		}
 	});
 	
@@ -308,8 +335,8 @@ if (Meteor.isClient) {
    Template.placeBid.events({
     'click button': function () {
 		//alert(document.getElementById("price").value)
-		var baseid = "11060861818140490423";
-		var relid = "17554243582654188572";
+		var baseid = Session.get('baseid');
+		var relid = Session.get('relid');
 		var price = document.getElementById("bidPrice").value;
 		var amount = document.getElementById("bidAmount").value;
       Meteor.call("placeBid",price,amount,baseid,relid,function(err,result){
@@ -323,8 +350,8 @@ if (Meteor.isClient) {
 	Template.placeAsk.events({
     'click button': function () {
 		//alert(document.getElementById("price").value)
-		var baseid = "11060861818140490423";
-		var relid = "17554243582654188572";
+		var baseid = Session.get('baseid');
+		var relid = Session.get('relid');
 		var price = document.getElementById("askPrice").value;
 		var amount = document.getElementById("askAmount").value;
       Meteor.call("placeAsk",price,amount,baseid,relid,function(err,result){
@@ -369,6 +396,7 @@ if (Meteor.isServer) {
 			//console.log(result);
 			
 			Meteor.call("getOrderbook",baseid,relid);
+			
 		
 		},
 		placeAsk: function(price, volume, baseid, relid){
@@ -379,6 +407,7 @@ if (Meteor.isServer) {
 			//console.log(result);
 			
 			Meteor.call("getOrderbook",baseid,relid);
+			
 		
 		},
 		allOrderbooks: function(){
@@ -410,26 +439,27 @@ if (Meteor.isServer) {
 			   result = HTTP.get(server+":"+port+"/%7B%22requestType%22:%22orderbook%22,%22baseid%22:%22"+baseid+"%22,%22relid%22:%22"+relid+"%22%7D").content;
 			   
 			   var json = JSON.parse( result);
-			   console.log(json.obookid);
+			   
 			   orderbooks = Orderbooks.find({'obookid':json.obookid}).fetch();
-		
+				
 				if(!json.error){
-				if(orderbooks.length === 0){
-					
-					Orderbooks.insert({'obookid':json.obookid,'baseid':json.baseid,'relid':json.relid,'orders':json });
-				}else{
+				if((typeof orderbooks.obookid !== 'undefined')){
 					
 					Orderbooks.update({'obookid':json.obookid,'baseid':json.baseid,'relid':json.relid},{'baseid':json.baseid,'relid':json.relid,'obookid':json.obookid,'orders':json });
+					
+				}else{
+					
+					Orderbooks.insert({'obookid':json.obookid,'baseid':json.baseid,'relid':json.relid,'orders':json });
 				}
 				}
 			   
-			   
+			   Meteor.call("allOrderbooks");
 			   return result;    
 			},
 		getPeers: function(){
 			
 			test = HTTP.get(server+":"+port+"/%7B%22requestType%22:%22getpeers%22%7D").content;
-			console.log(test);
+			//console.log(test);
 			
 			return test;
 			

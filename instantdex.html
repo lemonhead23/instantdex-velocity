@@ -12,7 +12,7 @@
 
 	Obookid: {{obookid}}
 	Baseid: {{orders.baseid}} Relid: {{orders.relid}}<br><br>
-	Press ctrl+m for database info
+	Press ctrl+m for database info || <a href="https://github.com/CryptoSleuth/CryptoSleuth/blob/master/assetInfo.txt">Complete Assetlist</a>
 <img src="../idexfinal1.png" width="100px" height="100px" style="float:left">
 
   <br><br>
@@ -38,7 +38,8 @@
 
 </div>
 
-{{> info}}
+<!--{{> info}}-->
+
 
 </template>
 
@@ -50,8 +51,8 @@
 </template>
 
 <template name="orderbooksoverview">
-	<div style="float:right; position:relative;right:150px;">
-	<table border="1" >
+	<div style="float:right; position:relative;">
+	<table id="overview" border="1" >
 	{{#each data}}
 	<tr>{{> overview}}</tr>
 	{{/each}}
@@ -62,9 +63,9 @@
 
 
 <template name="overview">
-	<td><a href="/orderbook/{{obookid}}">{{base}}/{{rel}}</a></td>
+	{{#if obookid}}<td><a href="/orderbook/{{obookid}}">{{base}}/{{rel}}</a></td>
 	<td>{{numquotes}}</td>
-	<td>{{exchange}}</td>
+	<td>{{exchange}}</td>{{/if}}
 	
 </template>
 
@@ -102,7 +103,7 @@
 										
                                         <input type="text" class="form-control"  id="bidPrice" name="bidPrice" required autofocus data-stripe="number" />
                                         
-                                        <span class="input-group-addon">BTC</span>
+                                        <span class="input-group-addon">{{relname}}</span>
                                     </div>
                                 </div>                            
                             </div>
@@ -111,7 +112,7 @@
 							<label class="col-sm-2 control-label" for="amount">Amount</label>
 							<div class="col-sm-10 input-group">
 							  <input class="form-control" type="text" id="bidAmount">       
-							  <span class="input-group-addon">NXT</span>
+							  <span class="input-group-addon">{{basename}}</span>
 							</div>
 						  </div>
                         <div class="row">
@@ -154,7 +155,7 @@
 										
                                         <input type="text" class="form-control"  id="askPrice" name="askPrice" required autofocus data-stripe="number" />
                                         
-                                        <span class="input-group-addon">BTC</span>
+                                        <span class="input-group-addon">{{relname}}</span>
                                     </div>
                                 </div>                            
                             </div>
@@ -163,7 +164,7 @@
 							<label class="col-sm-2 control-label" for="amount">Amount</label>
 							<div class="col-sm-10 input-group">
 							  <input class="form-control" type="text" id="askAmount">       
-							  <span class="input-group-addon">NXT</span>
+							  <span class="input-group-addon">{{basename}}</span>
 							</div>
 						  </div>
                         <div class="row">
@@ -207,6 +208,8 @@
 <template name="asktable">
 
 <table id="asktable">Sell Orders
+
+		<tr><td>Price</td><td>Volume</td></tr>
 		{{#each orders.asks}}
 		<tr>{{> ask}}</tr>
 		{{/each}}
@@ -217,7 +220,8 @@
 <template name="bidtable">
 
 <table id="bidtable">Buy Orders
-				
+		
+		<tr><td>Price</td><td>Volume</td></tr>
 		{{#each orders.bids}}
 		<tr>{{> bid}}</tr>
 		{{/each}}
