@@ -104,15 +104,16 @@ if (Meteor.isClient) {
 
 	});
 	
-	//Meteor.setInterval(function(){
+	Meteor.setInterval(function(){
 	
-	//console.log("asdasdasdasdasd123")
-	//var baseid = Session.get("baseid");
-	//var relid = Session.get("relid");
+	var baseid = Session.get("baseid");
+	var relid = Session.get("relid");
+	//console.log(baseid);
+	//console.log(relid);
 
-	//Meteor.call("updateDatabase",baseid,relid);
+	Meteor.call("updateDatabase",baseid,relid);
 	
-	//}, 5000);
+	}, 5000);
 	
 	
 								
@@ -362,8 +363,8 @@ if (Meteor.isClient) {
 		//alert(document.getElementById("price").value)
 		var baseid = Session.get('baseid');
 		var relid = Session.get('relid');
-					   console.log(baseid);
-			   console.log(relid);
+					   //console.log(baseid);
+			   //console.log(relid);
 		var price = document.getElementById("bidPrice").value;
 		var amount = document.getElementById("bidAmount").value;
       Meteor.call("placeBid",price,amount,baseid,relid,function(err,result){
@@ -379,8 +380,6 @@ if (Meteor.isClient) {
 		//alert(document.getElementById("price").value)
 		var baseid = Session.get('baseid');
 		var relid = Session.get('relid');
-							   console.log(baseid);
-			   console.log(relid);
 		var price = document.getElementById("askPrice").value;
 		var amount = document.getElementById("askAmount").value;
       Meteor.call("placeAsk",price,amount,baseid,relid,function(err,result){
