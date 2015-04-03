@@ -49,11 +49,16 @@ Router.route('/orderbook/:_id', function () {
 Router.onAfterAction('customPackageHook');
 
 Iron.Router.hooks.customPackageHook = function () {
+	
+	Session.setDefault('baseid', '17554243582654188572');
+	Session.setDefault('relid', '5527630');
+	
   orderbooks = Orderbooks.find({'obookid': this.params._id}).fetch()[0];
   if(orderbooks._id){
 	  Session.set('baseid', orderbooks.baseid);
 	  Session.set('relid', orderbooks.relid);
   }
+  
   this.next();
 };
 
@@ -65,6 +70,8 @@ if (Meteor.isClient) {
 	Meteor.subscribe('allorderbooks');
 	Meteor.subscribe('whitelist');
 	
+	Meteor.call("updateDatabase");
+	
 
 	
 	Session.setDefault('baseid', '17554243582654188572');
@@ -73,6 +80,10 @@ if (Meteor.isClient) {
 	
 	Session.setDefault('basename', 'BTC');
 	Session.setDefault('relname', 'NXT');
+	
+	Session.setDefault('updateTime', 2000);
+	
+	
 	
 	Tracker.autorun(function () {
 	  var baseid = Session.get("baseid");
@@ -89,8 +100,22 @@ if (Meteor.isClient) {
 				  }
 			  }
 		  }}
+		  
 
 	});
+	
+	//Meteor.setInterval(function(){
+	
+	//console.log("asdasdasdasdasd123")
+	//var baseid = Session.get("baseid");
+	//var relid = Session.get("relid");
+
+	//Meteor.call("updateDatabase",baseid,relid);
+	
+	//}, 5000);
+	
+	
+								
 	
 	//function testSet(baseid,relid){
 		
@@ -180,8 +205,8 @@ if (Meteor.isClient) {
   
    Template.orderbooksoverview.helpers({
     data: function () {
-		console.log("asdasdasdasdasdasddddddddddddddddddddddddddd");
-	console.log(Orderbooks.find({'type':'allorderbooks'}).fetch()[0].allorderbooks.orderbooks);
+		
+	
 	return Orderbooks.find({'type':'allorderbooks'}).fetch()[0].allorderbooks.orderbooks;
 
     }
@@ -337,6 +362,8 @@ if (Meteor.isClient) {
 		//alert(document.getElementById("price").value)
 		var baseid = Session.get('baseid');
 		var relid = Session.get('relid');
+					   console.log(baseid);
+			   console.log(relid);
 		var price = document.getElementById("bidPrice").value;
 		var amount = document.getElementById("bidAmount").value;
       Meteor.call("placeBid",price,amount,baseid,relid,function(err,result){
@@ -352,6 +379,8 @@ if (Meteor.isClient) {
 		//alert(document.getElementById("price").value)
 		var baseid = Session.get('baseid');
 		var relid = Session.get('relid');
+							   console.log(baseid);
+			   console.log(relid);
 		var price = document.getElementById("askPrice").value;
 		var amount = document.getElementById("askAmount").value;
       Meteor.call("placeAsk",price,amount,baseid,relid,function(err,result){
@@ -375,15 +404,42 @@ if (Meteor.isServer) {
 	  return Whitelist.find();
 	});
 	
+
+	
 	var port = "7777";
 	var server= "http://localhost";
 	
 	Meteor.methods({
+		setTimer: function(baseid,relid){
+			
+					console.log(arguments[0]);
+					console.log(arguments[1]);
+					arg0=arguments[0];
+					arg1=arguments[1];
+			
+				Meteor.setInterval(function(arg0,arg1){
+		
+					console.log("asdasdasasasdasdasdasdasdasdasdasdasdasdasd");
+
+					console.log(arguments[0]);
+					console.log(arguments[1]);
+					Meteor.call("updateDatabase",arguments[0],arguments[1]);
+					
+				}, 5000);
+		},
 		updateSettings: function(baseid,relid){
 			
 			
 			Session.set('baseid',baseid);
 			Session.set('relid',relid);
+			Meteor.call("getOrderbook",baseid,relid);
+			Meteor.call("allOrderbooks");
+			
+			},
+		updateDatabase: function(baseid,relid){
+			
+			
+
 			Meteor.call("getOrderbook",baseid,relid);
 			Meteor.call("allOrderbooks");
 			
@@ -439,17 +495,38 @@ if (Meteor.isServer) {
 			   result = HTTP.get(server+":"+port+"/%7B%22requestType%22:%22orderbook%22,%22baseid%22:%22"+baseid+"%22,%22relid%22:%22"+relid+"%22%7D").content;
 			   
 			   var json = JSON.parse( result);
+
+			   //console.log(Orderbooks.find().fetch()[0]);
 			   
-			   orderbooks = Orderbooks.find({'obookid':json.obookid}).fetch();
-				
+			   jsonResult=Orderbooks.find().fetch()[0];
+			   
+			   //console.log(json);
+			   if(typeof jsonResult !== 'undefined'){
+			   
+			   orderbooks = Orderbooks.find().fetch()[0].allorderbooks.orderbooks;
+			   //console.log(orderbooks);
+			
+				//console.log(!json.error);
 				if(!json.error){
-				if((typeof orderbooks.obookid !== 'undefined')){
 					
-					Orderbooks.update({'obookid':json.obookid,'baseid':json.baseid,'relid':json.relid},{'baseid':json.baseid,'relid':json.relid,'obookid':json.obookid,'orders':json });
+					found=false;
+					for(i=0;i<orderbooks.length;i++){
+						
+						if( orderbooks[i].baseid === baseid && orderbooks[i].relid === relid){
+							
+								found=true;
+								
+						}
+						
+					}
 					
-				}else{
-					
-					Orderbooks.insert({'obookid':json.obookid,'baseid':json.baseid,'relid':json.relid,'orders':json });
+					if(found){
+							Orderbooks.update({'obookid':json.obookid,'baseid':json.baseid,'relid':json.relid},{'baseid':json.baseid,'relid':json.relid,'obookid':json.obookid,'orders':json });
+							
+					}else{
+							
+							Orderbooks.insert({'obookid':json.obookid,'baseid':json.baseid,'relid':json.relid,'orders':json });
+					}
 				}
 				}
 			   
@@ -468,7 +545,8 @@ if (Meteor.isServer) {
 	
 	
   Meteor.startup(function () {
-	
+	  
+	  
     Meteor.call("getOrderbook","17554243582654188572","5527630");
 	Meteor.call("getOrderbook","6220108297598959542","5527630");
 	Meteor.call("allOrderbooks");
