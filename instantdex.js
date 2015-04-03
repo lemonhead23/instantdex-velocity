@@ -500,9 +500,12 @@ if (Meteor.isServer) {
 			   jsonResult=Orderbooks.find().fetch()[0];
 			   
 			   //console.log(json);
-			   if(typeof jsonResult !== 'undefined'){
+			    if(typeof jsonResult !== 'undefined'){
+				  
 			   
-			   orderbooks = Orderbooks.find().fetch()[0].allorderbooks.orderbooks;
+			   orderbooks = Orderbooks.find().fetch()[0];
+			   
+			   if(typeof orderbooks.allorderbooks !== 'undefined'){ 
 			   //console.log(orderbooks);
 			
 				//console.log(!json.error);
@@ -526,6 +529,7 @@ if (Meteor.isServer) {
 							
 							Orderbooks.insert({'obookid':json.obookid,'baseid':json.baseid,'relid':json.relid,'orders':json });
 					}
+				}
 				}
 				}
 			   
