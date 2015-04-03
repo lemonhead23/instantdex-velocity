@@ -30,8 +30,8 @@ Router.route('/orderbook/', function () {
 	});
 });
 
-Router.onAfterAction('customPackageHook');
-Router.onAfterAction('customPackageHook');
+
+
 
 Router.route('/orderbook/:_id', function () {
   this.render('homeNew', {
@@ -46,28 +46,26 @@ Router.route('/orderbook/:_id', function () {
   });
 });
 
+Router.onAfterAction('customPackageHook');
+
 Iron.Router.hooks.customPackageHook = function () {
   orderbooks = Orderbooks.find({'obookid': this.params._id}).fetch()[0];
-  Session.set('baseid', orderbooks.baseid);
-  Session.set('relid', orderbooks.relid);
-  console.log(orderbooks.baseid);
-
+  if(orderbooks._id){
+	  Session.set('baseid', orderbooks.baseid);
+	  Session.set('relid', orderbooks.relid);
+  }
   this.next();
 };
 
 if (Meteor.isClient) {
 	
-	//Tracker.autorun(function () {
-	  //var baseid = Session.get("baseid");
-	  //var relid = Session.get("relid");
-	      //allorderbooks = AllOrderbooks.find({'baseid': baseid,'relid': relid}).fetch()[0].orderbooks;
-  	//Session.set('basename', allorderbooks.base);
-	//Session.set('relname', allorderbooks.rel);
-	//});
+
 	
 	Meteor.subscribe('orderbooks');
 	Meteor.subscribe('allorderbooks');
 	Meteor.subscribe('whitelist');
+	
+
 	
 	Session.setDefault('baseid', '17554243582654188572');
 	Session.setDefault('relid', '5527630');
@@ -76,13 +74,50 @@ if (Meteor.isClient) {
 	Session.setDefault('basename', 'BTC');
 	Session.setDefault('relname', 'NXT');
 	
-	function testSet(baseid,relid){
-		
-	allorderbooks = AllOrderbooks.find({'baseid': baseid,'relid': relid}).fetch()[0].orderbooks;
-  	Session.set('basename', allorderbooks.base);
-	Session.set('relname', allorderbooks.rel);
+	Tracker.autorun(function () {
+	  var baseid = Session.get("baseid");
+	  var relid = Session.get("relid");
+	  db = Orderbooks.find({'type':'allorderbooks'}).fetch()[0];
+
+	      if(typeof db !== 'undefined'){
+			  if(typeof db.allorderbooks !== 'undefined'){
+			  orderbooks = db.allorderbooks.orderbooks;
+			  for(var i=0;i<orderbooks.length;i++){
+				  if(orderbooks[i].baseid==baseid && orderbooks[i].relid==relid){
+					Session.set('basename', orderbooks[i].base);
+			        Session.set('relname', orderbooks[i].rel);
+				  }
+			  }
+		  }}
+
+	});
 	
-	}
+	//function testSet(baseid,relid){
+		
+		//console.log("testSET");
+	//allorderbooks = AllOrderbooks.find({'baseid': baseid,'relid': relid}).fetch()[0].orderbooks;
+	//console.log(allorderbooks);
+	//console.log(baseid);
+	//Session.set('baseid',baseid);
+	//Session.set('relid',relid);
+	//console.log(allorderbooks[0].base);
+		//if(0<allorderbooks.length){
+			  //console.log("asdddsasdasdasdasdsddassadasasddsasds");
+			  //console.log(allorderbooks[0]._id);
+			  //for(var i=0;i<allorderbooks[0].orderbooks.length;i++){
+				  //console.log(allorderbooks[0].orderbooks[i].baseid);
+				  //console.log(baseid);
+				  //console.log(allorderbooks[0].orderbooks[i].baseid==baseid);
+				  //if(allorderbooks[0].orderbooks[i].baseid==baseid && allorderbooks[0].orderbooks[i].relid==relid){
+					  //console.log("ok");
+					//Session.set('basename', allorderbooks[0].orderbooks[i].base);
+			        //Session.set('relname', allorderbooks[0].orderbooks[i].rel);
+				  //}
+			  //}
+
+		  //}
+	
+	//}
 	
 	//test
 	
@@ -132,7 +167,7 @@ if (Meteor.isClient) {
 	    //document.getElementById("id").innerHTML = "value";  
 	
   // counter starts at 0
-  Session.setDefault('counter', 0);
+  //Session.setDefault('counter', 0);
 
 
    //Template.orderbooksHome.helpers({
@@ -169,7 +204,7 @@ if (Meteor.isClient) {
   
   function getOrderbookFromArray(baseid,relid){
 	  
-		array = AllOrderbooks.find().fetch()[0].orderbooks;
+		array = Orderbooks.find({'type':'allorderbooks'}).fetch()[0].allorderbooks.orderbooks;
 		returnObject = {};
 		
 
@@ -209,7 +244,16 @@ if (Meteor.isClient) {
     relname: function () {
  
       return getOrderbookFromArray(this.baseid,this.relid).rel;
-    }
+    },
+    baseid: function () {
+		console.log("asdasdasdasdasd"+this.baseid);
+		Session.set(this.baseid);
+		return Session.get('baseid');
+    },
+    relid: function () {
+	  Session.set(this.relid);
+      return Session.get('relid');
+    },
   });
 	
   
@@ -342,14 +386,13 @@ if (Meteor.isServer) {
 			var result = HTTP.get(server+":"+port+"/%7B%22requestType%22:%22allorderbooks%22%7D").content;
 			var json = JSON.parse( result);
 			
-			orderbooks = AllOrderbooks.find().fetch();
+			orderbooks = Orderbooks.find({'type':'allorderbooks'}).fetch();
 			//console.log(json);
 			
 			if(orderbooks.length==0){
-				AllOrderbooks.insert(json);
+				Orderbooks.insert({'type':'allorderbooks','allorderbooks':json});
 			}else{
-				AllOrderbooks.remove({});
-				AllOrderbooks.insert(json);
+				Orderbooks.update({'type':'allorderbooks'},{'type':'allorderbooks','allorderbooks':json});
 			}
 			
 			
