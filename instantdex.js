@@ -50,13 +50,18 @@ Router.onAfterAction('customPackageHook');
 
 Iron.Router.hooks.customPackageHook = function () {
 	
-	Session.setDefault('baseid', '17554243582654188572');
-	Session.setDefault('relid', '5527630');
+	//Session.setDefault('baseid', '17554243582654188572');
+	//Session.setDefault('relid', '5527630');
 	
-  orderbooks = Orderbooks.find({'obookid': this.params._id}).fetch()[0];
-  if(orderbooks._id){
-	  Session.set('baseid', orderbooks.baseid);
-	  Session.set('relid', orderbooks.relid);
+	if(!this.params._id){
+		
+		this.params._id="17554243582651323474";	
+	}
+	
+  orderbooks = Orderbooks.find({'obookid': this.params._id}).fetch();
+  if(orderbooks[0]._id){
+	  Session.set('baseid', orderbooks[0].baseid);
+	  Session.set('relid', orderbooks[0].relid);
   }
   
   this.next();
@@ -97,6 +102,11 @@ if (Meteor.isClient) {
 				  if(orderbooks[i].baseid==baseid && orderbooks[i].relid==relid){
 					Session.set('basename', orderbooks[i].base);
 			        Session.set('relname', orderbooks[i].rel);
+			        
+			          orderbooks = Orderbooks.find({'baseid':baseid,'relid':relid}).fetch()[0];
+					  Session.set('obookid', orderbooks.obookid);
+					  
+			        
 				  }
 			  }
 		  }}
@@ -215,9 +225,16 @@ if (Meteor.isClient) {
   
   Template.overview.helpers({
     obookid: function () {
- 
-	orderbooks = Orderbooks.find({'baseid':this.baseid,'relid':this.relid}).fetch()[0];
-    return orderbooks.obookid;
+	
+	if(this.baseid){
+		orderbooks = Orderbooks.find({'baseid':this.baseid,'relid':this.relid}).fetch()[0];
+	}
+	if(orderbooks.obookid){
+		
+		return orderbooks.obookid;
+		}else{
+		return "";	
+		}
     }
   });
   
@@ -439,18 +456,21 @@ if (Meteor.isServer) {
 			
 			
 
-			Meteor.call("getOrderbook",baseid,relid);
+			Meteor.call("getOrderbookAsync",baseid,relid);
 			Meteor.call("allOrderbooks");
 			
 			},
 		placeBid: function(price, volume, baseid, relid){
 			
 			var result = HTTP.get(server+":"+port+"/%7B%22requestType%22:%22placebid%22,%22baseid%22:%22"+baseid+"%22,%22relid%22:%22"+relid+"%22,%22volume%22:%22"+volume+"%22,%22price%22:%22"+price+"%22%7D").content;
+			
+			console.log(server+":"+port+"/%7B%22requestType%22:%22placebid%22,%22baseid%22:%22"+baseid+"%22,%22relid%22:%22"+relid+"%22,%22volume%22:%22"+volume+"%22,%22price%22:%22"+price+"%22%7D");
+			
 			var json = JSON.parse( result);
 			
-			//console.log(result);
+			console.log(result);
 			
-			Meteor.call("getOrderbook",baseid,relid);
+			Meteor.call("getOrderbookAsync",baseid,relid);
 			
 		
 		},
@@ -461,7 +481,7 @@ if (Meteor.isServer) {
 			
 			//console.log(result);
 			
-			Meteor.call("getOrderbook",baseid,relid);
+			Meteor.call("getOrderbookAsync",baseid,relid);
 			
 		
 		},
@@ -499,29 +519,34 @@ if (Meteor.isServer) {
 			   
 			   jsonResult=Orderbooks.find().fetch()[0];
 			   
-			   //console.log(json);
+			   console.log("teststststst")
+			   console.log(json);
 			    if(typeof jsonResult !== 'undefined'){
 				  
+			   console.log(baseid);
+			   orderbooks = Orderbooks.find().fetch();
 			   
-			   orderbooks = Orderbooks.find().fetch()[0];
-			   
-			   if(typeof orderbooks.allorderbooks !== 'undefined'){ 
+			   //console.log(orderbooks.allorderbooks);
+			   if(orderbooks){ 
 			   //console.log(orderbooks);
 			
 				//console.log(!json.error);
-				if(!json.error){
-					
+
+					console.log("teststststst123");
 					found=false;
+					//orderbooks=orderbooks.orderbooks;
 					for(i=0;i<orderbooks.length;i++){
 						
+						console.log(orderbooks[i].baseid);
+						console.log(baseid);
 						if( orderbooks[i].baseid === baseid && orderbooks[i].relid === relid){
 							
 								found=true;
-								
+								console.log("teststststst222");console.log("teststststst2222");
 						}
 						
 					}
-					
+					console.log("teststststst");
 					if(found){
 							Orderbooks.update({'obookid':json.obookid,'baseid':json.baseid,'relid':json.relid},{'baseid':json.baseid,'relid':json.relid,'obookid':json.obookid,'orders':json });
 							
@@ -529,12 +554,71 @@ if (Meteor.isServer) {
 							
 							Orderbooks.insert({'obookid':json.obookid,'baseid':json.baseid,'relid':json.relid,'orders':json });
 					}
-				}
-				}
+				
+				}else{
+					
+					
+				 
+				 }
 				}
 			   
 			   Meteor.call("allOrderbooks");
 			   return result;    
+			},
+			getOrderbookAsync: function(baseid, relid){
+				console.log("getOrderbookAsync call");
+						
+			   HTTP.get(server+":"+port+"/%7B%22requestType%22:%22orderbook%22,%22baseid%22:%22"+baseid+"%22,%22relid%22:%22"+relid+"%22%7D", function(error, result){
+			   
+			   var json = JSON.parse( result.content);
+
+			   //console.log(Orderbooks.find().fetch()[0]);
+			   
+			   jsonResult=Orderbooks.find().fetch()[0];
+			   
+			   //console.log(json);
+			    if(typeof jsonResult !== 'undefined'){
+				  
+			   //console.log(baseid);
+			   orderbooks = Orderbooks.find().fetch();
+			   
+			   //console.log(orderbooks.allorderbooks);
+			   if(orderbooks){ 
+			   //console.log(orderbooks);
+			
+				//console.log(!json.error);
+
+					found=false;
+					//orderbooks=orderbooks.orderbooks;
+					for(i=0;i<orderbooks.length;i++){
+						
+						//console.log(orderbooks[i].baseid);
+						//console.log(baseid);
+						if( orderbooks[i].baseid === baseid && orderbooks[i].relid === relid){
+							
+								found=true;
+								//console.log("found db entry");
+						}
+						
+					}
+
+					if(found){
+							Orderbooks.update({'obookid':json.obookid,'baseid':json.baseid,'relid':json.relid},{'baseid':json.baseid,'relid':json.relid,'obookid':json.obookid,'orders':json });
+							
+					}else{
+							
+							Orderbooks.insert({'obookid':json.obookid,'baseid':json.baseid,'relid':json.relid,'orders':json });
+					}
+				
+				}else{
+					
+					
+				 
+				 }
+				}
+			   
+			   Meteor.call("allOrderbooks");
+			   return result; });   
 			},
 		getPeers: function(){
 			
@@ -550,8 +634,8 @@ if (Meteor.isServer) {
   Meteor.startup(function () {
 	  
 	  
-    Meteor.call("getOrderbook","17554243582654188572","5527630");
-	Meteor.call("getOrderbook","6220108297598959542","5527630");
-	Meteor.call("allOrderbooks");
+    //Meteor.call("getOrderbook","17554243582654188572","5527630");
+	//Meteor.call("getOrderbook","6220108297598959542","5527630");
+	//Meteor.call("allOrderbooks");
   });
 }

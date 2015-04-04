@@ -53,9 +53,11 @@
 <template name="orderbooksoverview">
 	<div style="float:right; position:relative;">
 	<table id="overview" border="1" >
+	{{#with data}}
 	{{#each data}}
 	<tr>{{> overview}}</tr>
 	{{/each}}
+	{{/with}}
 	</table>
 	</div>
 </template>

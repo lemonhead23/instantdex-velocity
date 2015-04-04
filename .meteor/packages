@@ -13,3 +13,4 @@ sanjo:jasmine
 velocity:html-reporter
 iron:router
 msavin:mongol
+msavin:jetsetter
