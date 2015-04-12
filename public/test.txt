@@ -1,0 +1,249 @@
+test setUp func here
+
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++ test_placebid
+query json is:  {'relamount': '', 'timestamp': '', 'price': '0.014', 'gui': '', 'requestType': 'placebid', 'baseid': '1106086181814049042', 'relid': '455105891325210530', 'volume': '1.00', 'baseamount': ''}
+
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~ SuperNET rpl777y:
+
+ {'base': 'unknown', 'askoffer': 0, 'rel': 'unknown', 'offerNXT': '8418687609572182360', 'minperc': 75, 'relamount': '1400000', 'age': 0, 'quoteid': '925726716172737371', 'price': 0.014, 'baseamount': '100000000', 'NXT': '8418687609572182360', 'exchange': 'InstantDEX', 'timestamp': 1428394616, 'requestType': 'bid', 'baseid': '1106086181814049042', 'relid': '455105891325210530', 'volume': 1}
+ test setUp func here
+
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++ test_placeask
+query json is:  {'relamount': '', 'timestamp': '', 'price': '0.014', 'gui': '', 'requestType': 'placeask', 'baseid': '1106086181814049042', 'relid': '455105891325210530', 'volume': '1.00', 'baseamount': ''}
+
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~ SuperNET rpl777y:
+
+ {'base': 'unknown', 'askoffer': 1, 'rel': 'unknown', 'offerNXT': '8418687609572182360', 'minperc': 75, 'relamount': '1400000', 'age': 0, 'quoteid': '393001523369750105', 'price': 0.014, 'baseamount': '100000000', 'NXT': '8418687609572182360', 'exchange': 'InstantDEX', 'timestamp': 1428394616, 'requestType': 'ask', 'baseid': '1106086181814049042', 'relid': '455105891325210530', 'volume': 1}
+ test setUp func here
+
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++ test_orderbook
+query json is:  {'base': '', 'allfields': '1', 'rel': '', 'gui': '', 'requestType': 'orderbook', 'baseid': '11060861818140490423', 'relid': '17554243582654188572', 'oldest': '', 'maxdepth': ''}
+
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~ SuperNET rpl777y:
+
+ {'error': 'empty orderbook'}
+ test setUp func here
+
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++ test_allorderbooks
+query json is:  {'requestType': 'allorderbooks'}
+
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~ SuperNET rpl777y:
+
+ {'orderbooks': [{'base': 'UNKNOWN', 'rel': 'UNKNOWN', 'numquotes': 4, 'exchange': 'InstantDEX', 'baseid': '1106086181814049042', 'relid': '455105891325210530'}, {'base': 'UNKNOWN', 'rel': 'UNKNOWN', 'numquotes': 0, 'exchange': 'InstantDEX', 'baseid': '455105891325210530', 'relid': '1106086181814049042'}, {'base': 'UNKNOWN', 'rel': 'NXT', 'numquotes': 0, 'exchange': 'nxtae', 'baseid': '1106086181814049042', 'relid': '5527630'}, {'base': 'NXT', 'rel': 'UNKNOWN', 'numquotes': 0, 'exchange': 'nxtae', 'baseid': '5527630', 'relid': '1106086181814049042'}, {'base': 'UNKNOWN', 'rel': 'NXT', 'numquotes': 0, 'exchange': 'nxtae', 'baseid': '455105891325210530', 'relid': '5527630'}, {'base': 'NXT', 'rel': 'UNKNOWN', 'numquotes': 0, 'exchange': 'nxtae', 'baseid': '5527630', 'relid': '455105891325210530'}, {'base': 'BTCD', 'rel': 'BTC', 'numquotes': 2, 'exchange': 'InstantDEX', 'baseid': '11060861818140490423', 'relid': '17554243582654188572'}, {'base': 'BTC', 'rel': 'BTCD', 'numquotes': 0, 'exchange': 'InstantDEX', 'baseid': '17554243582654188572', 'relid': '11060861818140490423'}, {'base': 'BTCD', 'rel': 'NXT', 'numquotes': 0, 'exchange': 'nxtae', 'baseid': '11060861818140490423', 'relid': '5527630'}, {'base': 'NXT', 'rel': 'BTCD', 'numquotes': 0, 'exchange': 'nxtae', 'baseid': '5527630', 'relid': '11060861818140490423'}, {'base': 'BTC', 'rel': 'NXT', 'numquotes': 0, 'exchange': 'nxtae', 'baseid': '17554243582654188572', 'relid': '5527630'}, {'base': 'NXT', 'rel': 'BTC', 'numquotes': 0, 'exchange': 'nxtae', 'baseid': '5527630', 'relid': '17554243582654188572'}]}
+ test setUp func here
+
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++ test_openorders
+query json is:  {'requestType': 'openorders'}
+
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~ SuperNET rpl777y:
+
+ {'openorders': [{'base': 'unknown', 'askoffer': 0, 'rel': 'unknown', 'offerNXT': '8418687609572182360', 'minperc': 75, 'relamount': '1400000', 'iQ': '3000012608', 'age': 725, 'quoteid': '4786941044935271058', 'price': 0.014, 'baseamount': '100000000', 'NXT': '8418687609572182360', 'exchange': 'InstantDEX', 'timestamp': 1428393891, 'requestType': 'makeoffer3', 'baseid': '1106086181814049042', 'relid': '455105891325210530', 'volume': 1}, {'base': 'unknown', 'askoffer': 1, 'rel': 'unknown', 'offerNXT': '8418687609572182360', 'minperc': 75, 'relamount': '1400000', 'iQ': '3000012684', 'age': 724, 'quoteid': '2493117405837223979', 'price': 0.014, 'baseamount': '100000000', 'NXT': '8418687609572182360', 'exchange': 'InstantDEX', 'timestamp': 1428393892, 'requestType': 'makeoffer3', 'baseid': '1106086181814049042', 'relid': '455105891325210530', 'volume': 1}, {'base': 'unknown', 'askoffer': 0, 'rel': 'unknown', 'offerNXT': '8418687609572182360', 'minperc': 75, 'relamount': '1400000', 'iQ': '3000012760', 'age': 0, 'quoteid': '925726716172737371', 'price': 0.014, 'baseamount': '100000000', 'NXT': '8418687609572182360', 'exchange': 'InstantDEX', 'timestamp': 1428394616, 'requestType': 'makeoffer3', 'baseid': '1106086181814049042', 'relid': '455105891325210530', 'volume': 1}, {'base': 'unknown', 'askoffer': 1, 'rel': 'unknown', 'offerNXT': '8418687609572182360', 'minperc': 75, 'relamount': '1400000', 'iQ': '3000012836', 'age': 0, 'quoteid': '393001523369750105', 'price': 0.014, 'baseamount': '100000000', 'NXT': '8418687609572182360', 'exchange': 'InstantDEX', 'timestamp': 1428394616, 'requestType': 'makeoffer3', 'baseid': '1106086181814049042', 'relid': '455105891325210530', 'volume': 1}, {'base': 'BTCD', 'askoffer': 0, 'rel': 'BTC', 'offerNXT': '8418687609572182360', 'minperc': 75, 'relamount': '100000000', 'iQ': '3000022880', 'age': 722, 'quoteid': '8378547849938514045', 'price': 1, 'baseamount': '100000000', 'NXT': '8418687609572182360', 'exchange': 'InstantDEX', 'timestamp': 1428393894, 'requestType': 'makeoffer3', 'baseid': '11060861818140490423', 'relid': '17554243582654188572', 'volume': 1}, {'base': 'BTCD', 'askoffer': 1, 'rel': 'BTC', 'offerNXT': '8418687609572182360', 'minperc': 75, 'relamount': '100000000', 'iQ': '3000022956', 'age': 722, 'quoteid': '6761011762191127754', 'price': 1, 'baseamount': '100000000', 'NXT': '8418687609572182360', 'exchange': 'InstantDEX', 'timestamp': 1428393894, 'requestType': 'makeoffer3', 'baseid': '11060861818140490423', 'relid': '17554243582654188572', 'volume': 1}]}
+ test setUp func here
+
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++ test_respondtx
+query json is:  {'requestType': 'respondtx', 'feetxid': '', 'signedtx': '', 'feeB': '', 'quoteid': ''}
+
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~ SuperNET rpl777y:
+
+ {'result': 'invalid respondtx_func request'}
+ test setUp func here
+
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++ test_processutx
+query json is:  {'sig': '', 'utx': '', 'full': '', 'requestType': 'processutx', 'quoteid': '', 'feeAtxid': ''}
+ test setUp func here
+
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++ test_bid
+query json is:  {'relamount': '', 'timestamp': '', 'price': '1', 'type': '', 'requestType': 'bid', 'baseid': '11060861818140490423', 'relid': '17554243582654188572', 'gui': '', 'volume': '1', 'baseamount': ''}
+
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~ SuperNET rpl777y:
+
+ {'base': 'BTCD', 'askoffer': 0, 'rel': 'BTC', 'offerNXT': '8418687609572182360', 'minperc': 75, 'relamount': '100000000', 'age': 0, 'quoteid': '2376836554026900485', 'price': 1, 'baseamount': '100000000', 'NXT': '8418687609572182360', 'exchange': 'InstantDEX', 'timestamp': 1428394616, 'requestType': 'bid', 'baseid': '11060861818140490423', 'relid': '17554243582654188572', 'volume': 1}
+ test setUp func here
+
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++ test_ask
+query json is:  {'relamount': '', 'timestamp': '', 'price': '1', 'type': '', 'requestType': 'ask', 'baseid': '11060861818140490423', 'relid': '17554243582654188572', 'gui': '', 'volume': '1', 'baseamount': ''}
+
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~ SuperNET rpl777y:
+
+ {'base': 'BTCD', 'askoffer': 1, 'rel': 'BTC', 'offerNXT': '8418687609572182360', 'minperc': 75, 'relamount': '100000000', 'age': 0, 'quoteid': '5864670364164948734', 'price': 1, 'baseamount': '100000000', 'NXT': '8418687609572182360', 'exchange': 'InstantDEX', 'timestamp': 1428394617, 'requestType': 'ask', 'baseid': '11060861818140490423', 'relid': '17554243582654188572', 'volume': 1}
+ test allsignals setUp func here
+
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++ running API call
+query json is:  {'requestType': 'allsignals'}
+
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~ SuperNET rpl777y:
+
+ {'signals': [{'signal': 'firstbid', 'scale': 'price'}, {'signal': 'firstask', 'scale': 'price'}, {'signal': 'lowbid', 'scale': 'price'}, {'signal': 'highask', 'scale': 'price'}, {'signal': 'highbid', 'scale': 'price'}, {'signal': 'lowask', 'scale': 'price'}, {'signal': 'lowbid', 'scale': 'price'}, {'signal': 'lastask', 'scale': 'price'}, {'signal': 'arbbid', 'scale': 'price'}, {'signal': 'arbask', 'scale': 'price'}, {'signal': 'virtbid', 'scale': 'price'}, {'signal': 'virtask', 'scale': 'price'}, {'signal': 'avebid', 'scale': 'price'}, {'signal': 'aveask', 'scale': 'price'}, {'signal': 'median', 'scale': 'price'}, {'signal': 'aveprice', 'scale': 'price'}, {'signal': 'ohlc', 'scale': 'price', 'n': 4}, {'signal': 'volume', 'scale': 'positive'}]}
+ test lottostats setUp func here
+
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++ running API call
+query json is:  {'requestType': 'lottostats'}
+
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~ SuperNET rpl777y:
+
+ {'topMM': '0', 'NXT': '8418687609572182360', 'odds': '0.00', 'totaltickets': '0', 'result': 'lottostats', 'numtickets': '0'}
+ test tradehistory setUp func here
+
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++ running API call
+query json is:  {'requestType': 'tradehistory'}
+
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~ SuperNET rpl777y:
+
+ {}
+ test getsignal setUp func here
+
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++ running API call
+query json is:  {'requestType': 'getsignal'}
+
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~ SuperNET rpl777y:
+
+ {'error': 'too wide'}
+ test cancelquote setUp func here
+
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++ running API call
+query json is:  {'requestType': 'cancelquote', 'quoteid': '123'}
+
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~ SuperNET rpl777y:
+
+ {'result': 'you can only cancel your InstantDEX orders'}
+ test processjumptrade setUp func here
+
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++ running API call
+query json is:  {'requestType': 'processjumptrade'}
+
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~ SuperNET rpl777y:
+
+ {'result': None}
+ test jumptrades setUp func here
+
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++
+++++++++++++ running API call
+query json is:  {'requestType': 'jumptrades'}
+
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~
+~~~~~~~~~~~~ SuperNET rpl777y:
+
+ {}
+empty

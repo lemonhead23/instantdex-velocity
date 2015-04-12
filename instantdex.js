@@ -568,7 +568,7 @@ if (Meteor.isServer) {
 			getOrderbookAsync: function(baseid, relid){
 				console.log("getOrderbookAsync call");
 						
-			   HTTP.get(server+":"+port+"/%7B%22requestType%22:%22orderbook%22,%22baseid%22:%22"+baseid+"%22,%22relid%22:%22"+relid+"%22%7D", function(error, result){
+			   HTTP.get(server+":"+port+"/%7B%22requestType%22:%22orderbook%22,%22baseid%22:%22"+baseid+"%22,%22relid%22:%22"+relid+"%22,%22allfields%22:%221%22%7D", function(error, result){
 			   
 			   var json = JSON.parse( result.content);
 
